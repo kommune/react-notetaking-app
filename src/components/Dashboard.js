@@ -6,17 +6,19 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      notes: [
-        {
-          title: "Note1",
-          body: "Hello, this is my first note!"
-        },
-        {
-          title: "Note2",
-          body: "React is cool!"
-        }
-      ], currentNoteIndex: 0
+      notes: [], 
+      currentNoteIndex: ""
     }
+  }
+
+  componentWillMount() {
+    fetch('http://localhost:3001/notes')
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          notes: data
+        })
+      })
   }
 
   handleClick() {
@@ -60,12 +62,32 @@ class Dashboard extends React.Component {
     });
   }
 
+  sync() {
+    fetch(
+      'http://localhost:3001/notes/sync',
+      {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ message: this.state.notes })
+      },
+    ).then((response) => response.json())
+    .then((data) => {
+      this.setState({
+        notes: data
+      })
+    })
+  }
+
   render() {
     return(
       <div className="dashboard">
         <div className="title">
           <h1>My Notetaking App</h1>
           <button onClick={() => this.handleClick()}>Add new note!</button>
+          <button onClick={() => this.sync()}>Sync</button>
         </div>
         <Sidebar 
           notes={this.state.notes} 

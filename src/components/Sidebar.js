@@ -2,13 +2,21 @@ import React from 'react';
 
 class Sidebar extends React.Component {
   renderNotes(array) {
-    return array.map((note, index) => {
+    if (array.length === 0) {
       return(
-        <div onClick={() => this.props.handleNoteClick(index)}>
-          { note.title }
+        <div>
+          No notes yet!
         </div>
       )
-    })
+    } else {
+      return array.map((note, index) => {
+        return(
+          <div onClick={() => this.props.handleNoteClick(index)}>
+            { note.title }
+          </div>
+        )
+      })
+    }
   }
   
   render() {
