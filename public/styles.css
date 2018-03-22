@@ -1,0 +1,33 @@
+body {
+  background-color: rgb(238, 145, 145);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-areas: ". title ."
+                       "sidebar note note";
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+}
+
+.title {
+  grid-area: title;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.note {
+  grid-area: note;
+  width: 100%;
+}
+
+.note > .title-input {
+  width: 80%;
+}
+
+.note > .body-input {
+  width: 80%;
+}
